@@ -3813,7 +3813,7 @@ static int _sha_update(struct ahash_request  *req, uint32_t sha_block_size)
 	len = rctx->trailing_buf_len;
 	sg_last = req->src;
 
-	while (len < nbytes) {
+	while (len < nbytes && sg_last) {
 		if ((len + sg_last->length) > nbytes)
 			break;
 		len += sg_last->length;
@@ -3836,6 +3836,8 @@ static int _sha_update(struct ahash_request  *req, uint32_t sha_block_size)
 			req->src = rctx->sg;
 			sg_mark_end(&rctx->sg[0]);
 		} else {
+			if (!sg_last)
+				return -EINVAL;
 			sg_mark_end(sg_last);
 			memset(rctx->sg, 0, sizeof(rctx->sg));
 			sg_set_buf(&rctx->sg[0], staging,
@@ -3844,8 +3846,11 @@ static int _sha_update(struct ahash_request  *req, uint32_t sha_block_size)
 			sg_chain(rctx->sg, 2, req->src);
 			req->src = rctx->sg;
 		}
-	} else
+	} else {
+		if (!sg_last)
+			return -EINVAL;
 		sg_mark_end(sg_last);
+	}
 
 	req->nbytes = nbytes;
 	rctx->trailing_buf_len = trailing_buf_len;
