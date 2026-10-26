@@ -2093,6 +2093,13 @@ static int qcedev_check_offload_cipher_params(struct qcedev_offload_cipher_op_re
 		goto error;
 	}
 
+	if (!(QCEDEV_OFFLOAD_HLOS_HLOS <= req->op && QCEDEV_OFFLOAD_OPER_LAST > req->op)) {
+		pr_err("%s: Invalid op = %d, %d <= op < %d\n", __func__,
+		       req->op, QCEDEV_OFFLOAD_HLOS_HLOS,
+		       QCEDEV_OFFLOAD_OPER_LAST);
+		goto error;
+	}
+
 	if (qcedev_check_offload_cipher_key(req, podev))
 		goto error;
 
