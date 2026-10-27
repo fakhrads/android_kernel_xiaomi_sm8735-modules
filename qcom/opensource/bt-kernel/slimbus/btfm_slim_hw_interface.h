@@ -33,6 +33,7 @@ typedef enum Codec {
 	SSC,
         LHDC,
 	MIHC,
+	APTX_PLUS,
 	NO_CODEC
 } codectype;
 
@@ -44,6 +45,7 @@ static char const *codec_text[] = {"CODEC_TYPE_SBC", "CODEC_TYPE_AAC",
 				   "CODEC_TYPE_APTX_AD_R4",
 				   "CODEC_TYPE_RVP", "CODEC_TYPE_SSC",
 				   "CODEC_TYPE_LHDC", "CODEC_TYPE_MIHC",
+				   "CODEC_TYPE_APTX_PLUS",
 				   "CODEC_TYPE_INVALID"};
 
 static SOC_ENUM_SINGLE_EXT_DECL(codec_display, codec_text);
