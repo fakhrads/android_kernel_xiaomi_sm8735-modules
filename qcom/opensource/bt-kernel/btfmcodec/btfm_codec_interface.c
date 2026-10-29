@@ -693,6 +693,9 @@ int btfmcodec_hwep_prepare(struct btfmcodec_data *btfmcodec, uint32_t sampling_r
 				     dai_drv->dai_ops->hwep_shutdown) {
 					dai_drv->dai_ops->hwep_shutdown((void *)hwep_info, id);
 				}
+			} else {
+				if (seamless == false)
+					btfmcodec_set_current_state(state, BT_Connected);
 			}
 		} else if (ret == 0 && test_bit(BTADV_CONFIGURE_I2S, &hwep_info->flags)) {
 			BTFMCODEC_INFO("%s: configuring I2S", __func__);
