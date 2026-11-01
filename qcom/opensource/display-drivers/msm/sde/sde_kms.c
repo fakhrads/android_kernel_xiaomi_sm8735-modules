@@ -1443,8 +1443,10 @@ static void sde_kms_prepare_commit(struct msm_kms *kms,
 
 	switch (kp_active_mode()) {
 	case 1:
+	case 2:
 		break;
-	case 3:
+	case 4:
+	case 5:
 		cpu_boost_kick(8);
 		qcom_dcvs_bus_boost_kick(8);
 		break;
