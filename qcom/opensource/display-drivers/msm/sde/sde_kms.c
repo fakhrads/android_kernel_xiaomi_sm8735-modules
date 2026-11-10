@@ -1441,18 +1441,14 @@ static void sde_kms_prepare_commit(struct msm_kms *kms,
 		goto end;
 	}
 
+	/* A frequency floor on every frame is for the performance profiles only */
 	switch (kp_active_mode()) {
-	case 1:
-	case 2:
-		break;
 	case 4:
 	case 5:
 		cpu_boost_kick(8);
 		qcom_dcvs_bus_boost_kick(8);
 		break;
 	default:
-		cpu_boost_kick(6);
-		qcom_dcvs_bus_boost_kick(6);
 		break;
 	}
 
