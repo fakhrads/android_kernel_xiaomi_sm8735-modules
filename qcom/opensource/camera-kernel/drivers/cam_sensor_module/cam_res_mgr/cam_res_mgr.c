@@ -686,6 +686,7 @@ int cam_res_mgr_gpio_set_value(unsigned int gpio, int value)
 	 **/
 	if (!found) {
 		CAM_ERR(CAM_RES, "gpio: %u not found", gpio);
+		mutex_unlock(&cam_res->gpio_res_lock);
 		return -EINVAL;
 	} else if (!cam_res->shared_gpio_enabled) {
 		gpio_set_value_cansleep(gpio, value);
